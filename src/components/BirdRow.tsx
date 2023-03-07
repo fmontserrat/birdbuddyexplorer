@@ -1,6 +1,7 @@
 import React from 'react'
 import { Bird } from '../types'
 import IconWithTooltip from './IconWithTooltip'
+import { cleanKey } from '../utils/keyCleaner'
 
 const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => (
     <tr key={bird.id}>
@@ -20,7 +21,7 @@ const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => (
         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <div className="flex">
                 {bird.badges.map((badge) => {
-                    const key = `${bird.id}-${badge.name.replaceAll(' ', '_')}`
+                    const key = `${bird.id}-${cleanKey(badge.name)}`
 
                     return (
                         <IconWithTooltip
@@ -36,7 +37,7 @@ const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => (
         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
             <div className="flex">
                 {bird.favoriteFoods.map((food) => {
-                    const key = `${bird.id}-${food.name.replaceAll(' ', '_')}`
+                    const key = `${bird.id}-${cleanKey(food.name)}`
 
                     return (
                         <IconWithTooltip
