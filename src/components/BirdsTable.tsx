@@ -3,10 +3,11 @@ import { Bird } from '../types'
 import Loader from './Loader'
 import BirdRow from './BirdRow'
 
-const BirdsTable: React.FC<{ birds: Bird[]; loading: boolean }> = ({
-    birds,
-    loading,
-}) => {
+const BirdsTable: React.FC<{
+    birds: Bird[]
+    loading: boolean
+    searchQuery: string
+}> = ({ birds, loading, searchQuery }) => {
     return (
         <div className="flow-root mt-4">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -17,7 +18,7 @@ const BirdsTable: React.FC<{ birds: Bird[]; loading: boolean }> = ({
                         </div>
                     )}
                     {!!birds.length && (
-                        <table className="min-w-full divide-y divide-gray-300">
+                        <table className="min-w-full divide-y divide-gray-300 border-collapse table-auto">
                             <thead>
                                 <tr>
                                     <th
@@ -46,6 +47,13 @@ const BirdsTable: React.FC<{ birds: Bird[]; loading: boolean }> = ({
                                 ))}
                             </tbody>
                         </table>
+                    )}
+                    {!birds.length && !!searchQuery?.length && !loading && (
+                        <div className="flex justify-center mt-8 text-xl text-gray-600">
+                            No birds called{' '}
+                            <b className="mx-1"> {` ${searchQuery} `} </b> were
+                            found
+                        </div>
                     )}
                 </div>
             </div>

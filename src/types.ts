@@ -8,6 +8,13 @@ export interface Bird {
     iconUrl: string
     badges: Badge[]
     favoriteFoods: Food[]
+    sounds: Sound[]
+    indefiniteArticle: string
+    definiteArticle: string
+    alternativeName?: string
+    genderOfName?: string
+    isUnofficialName: boolean
+    mapUrl: string
 }
 
 export interface Badge {
@@ -19,4 +26,36 @@ export interface Badge {
 export interface Food {
     name: string
     iconUrl: string
+}
+
+export interface Edge {
+    cursor: string
+    node: Node
+}
+
+export interface Node {
+    id: string
+    feederName: string
+    isShared: boolean
+    liked: boolean
+    likes: number
+    locationCity: string
+    locationCountry: string
+    media: Media
+}
+
+export interface Media {
+    createdAt: number
+    id: string
+    state: string
+    thumbnailUrl: string
+    origin: string
+    ownerName: string
+    owning: boolean
+}
+
+interface Sound {
+    authorName: string
+    sourceUrl: string
+    url: string
 }
