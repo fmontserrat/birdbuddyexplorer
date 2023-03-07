@@ -1,7 +1,9 @@
 import { XCircleIcon } from '@heroicons/react/20/solid'
 import React from 'react'
 
-const Example: React.FC<{ message: string }> = ({ message }) => {
+const Example: React.FC<{ message: React.ReactElement | string }> = ({
+    message,
+}) => {
     return (
         <div className="rounded-md bg-red-50 p-4">
             <div className="flex">

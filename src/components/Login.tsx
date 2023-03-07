@@ -1,21 +1,10 @@
-import React from 'react'
-import { gql, useMutation } from '@apollo/client'
+import React, { useEffect } from 'react'
+import { useMutation } from '@apollo/client'
 import ErrorBanner from './ErrorBanner'
 import Loader from './Loader'
 import { useNavigate } from 'react-router-dom'
-
-const LOGIN_MUTATION = gql`
-    mutation authEmailSignIn($email: String!, $password: String!) {
-        authEmailSignIn(
-            emailSignInInput: { email: $email, password: $password }
-        ) {
-            ... on Auth {
-                accessToken
-                refreshToken
-            }
-        }
-    }
-`
+import { LOGIN_MUTATION } from '../queries/loginMutation'
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../config/constants'
 
 const Login = () => {
     const [email, setEmail] = React.useState('')
@@ -29,21 +18,28 @@ const Login = () => {
         }
     )
 
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        await authEmailSignIn({ variables: { email, password } })
-        if (data?.authEmailSignIn?.accessToken) {
-            sessionStorage.setItem(
-                'accessToken',
-                data.authEmailSignIn.accessToken
-            )
-            sessionStorage.setItem(
-                'refreshToken',
-                data.authEmailSignIn.refreshToken
-            )
+    useEffect(() => {
+        redirectIfAuthenticated()
+    }, [data])
 
+    const redirectIfAuthenticated = () => {
+        const accessToken =
+            data?.authEmailSignIn?.accessToken || data?.accessToken
+        const refreshToken =
+            data?.authEmailSignIn?.refreshToken || data?.refreshToken
+
+        if (accessToken) {
+            localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
+            localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
             navigate('/home')
         }
+    }
+
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        localStorage.removeItem(ACCESS_TOKEN_KEY)
+        localStorage.removeItem(REFRESH_TOKEN_KEY)
+        await authEmailSignIn({ variables: { email, password } })
     }
 
     return (
@@ -58,6 +54,12 @@ const Login = () => {
                     Sign in using your Bird Buddy account
                 </h2>
             </div>
+
+            {loading && (
+                <div className="mt-8 flex justify-center">
+                    <Loader />
+                </div>
+            )}
 
             {!loading && (
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -137,6 +139,7 @@ const Login = () => {
 
                             <div>
                                 <button
+                                    disabled={loading}
                                     onClick={onSubmit}
                                     className="flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
@@ -145,7 +148,6 @@ const Login = () => {
                             </div>
                         </form>
                     </div>
-                    {loading && <Loader />}
                 </div>
             )}
         </div>
