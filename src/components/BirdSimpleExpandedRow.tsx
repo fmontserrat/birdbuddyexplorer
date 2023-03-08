@@ -23,10 +23,7 @@ const BirdSimpleExpandedRow: React.FC<{
 
     return (
         <tr>
-            <td
-                className="whitespace-nowrap py-0 pl-0 pr-3 text-sm sm:pl-0"
-                colSpan={3}
-            >
+            <td className="whitespace-nowrap p-0 px-3 text-sm" colSpan={3}>
                 <div className="md:ml-4">
                     {!!data?.collectionCommunityMediaBySpeciesId?.edges
                         ?.length && (
