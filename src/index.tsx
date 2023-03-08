@@ -11,13 +11,14 @@ import {
 } from '@apollo/client'
 import { GRAPHQL_URL } from './constants/config'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Dashboard from './components/Dashboard'
+import Dashboard from './pages/Dashboard'
 import { refreshToken, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './auth'
 import { onError } from '@apollo/client/link/error'
 import { AUTH_TOKEN_EXPIRED_ERROR } from './constants/errors'
 import { setContext } from '@apollo/client/link/context'
 import Login from './components/Login'
 import { HOME, LOGIN, ROOT } from './constants/paths'
+import BirdPage from './pages/BirdPage'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
     {
         path: HOME,
         element: <Dashboard />,
+    },
+    {
+        path: '/bird/:id',
+        element: <BirdPage />,
     },
 ])
 

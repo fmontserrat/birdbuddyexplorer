@@ -4,6 +4,9 @@ import { useQuery } from '@apollo/client'
 import { BIRD_MEDIA } from '../queries/birdMediaQuery'
 import NodeComponent from './Node'
 import Loader from './Loader'
+import Button from './Button'
+import { Link } from 'react-router-dom'
+import { birdPagePath } from '../constants/paths'
 
 const BirdSimpleExpandedRow: React.FC<{
     isExpanded: boolean
@@ -57,6 +60,11 @@ const BirdSimpleExpandedRow: React.FC<{
                                 yet
                             </div>
                         )}
+                </div>
+                <div className="text-center my-8">
+                    <Link to={birdPagePath(bird)}>
+                        <Button text="See more" />
+                    </Link>
                 </div>
             </td>
         </tr>

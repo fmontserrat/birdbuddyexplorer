@@ -8,11 +8,11 @@ import { MAX_PAGE_SIZE } from '../constants/config'
 
 const BirdExpandedRow: React.FC<{
     loading: boolean
-    isExpanded: boolean
-    bird: Bird
+    bird?: Bird
     data: { collectionCommunityMediaBySpeciesId: { edges: Edge[] } }
-}> = ({ isExpanded, bird, data, loading }) => {
-    if (!isExpanded) {
+}> = ({ bird, data, loading }) => {
+    if (!bird) {
+        // TODO fetch bird
         return null
     }
 
