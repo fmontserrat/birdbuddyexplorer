@@ -21,7 +21,7 @@ Available insights about data:
 The app is deployed at:
 https://fmontserrat.github.io/birdbuddyexplorer
 
-**NOTE: Due to CORS checks at the BirdBuddy GraphQL API side, the app can only be used from the internet with disabled CORS extensions such as [this one](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en)**
+**NOTE: Due to CORS checks at the BirdBuddy GraphQL API side (that's a good thing), the app can only be used from the internet with disabled CORS extensions such as [this one](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en)**
 
 **NOTE of the NOTE: Disabled CORS is dangerous. Do not use the extension on other sites**
 
@@ -61,3 +61,13 @@ Open your browser and copy this address:
 http://localhost:3000/birdbuddyexplorer
 
 At this point you are running the app on your computer :-)
+
+## Log In
+
+Google and Facebook SSO authentication is not supported due to the security of those processes not allowing it (that is a good thing). Hacks and workarounds are possible but not planned or worth the effort and risk of being banned.
+
+To log into the app use Bird Buddy login and password. 
+
+If your account uses Google or Facebook SSO, you can create a new one from the Android or iOS app (log out, sign up and log back into your own account) and use those credentials for this app.
+
+*NOTE: The app does not access your feeder, only community data for with login is still necessary. There is no need to invite your new account into your feeder.*
