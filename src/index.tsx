@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
 import {
     ApolloClient,
     ApolloLink,
@@ -10,14 +9,15 @@ import {
     InMemoryCache,
     HttpLink,
 } from '@apollo/client'
-import { GRAPHQL_URL } from './config/config'
+import { GRAPHQL_URL } from './constants/config'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './config/constants'
+import { refreshToken, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './auth'
 import { onError } from '@apollo/client/link/error'
-import { AUTH_TOKEN_EXPIRED_ERROR } from './config/errors'
-import { refreshToken } from './auth/auth'
+import { AUTH_TOKEN_EXPIRED_ERROR } from './constants/errors'
 import { setContext } from '@apollo/client/link/context'
+import Login from './components/Login'
+import { HOME, LOGIN, ROOT } from './constants/paths'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -85,11 +85,15 @@ export const apolloClient = new ApolloClient({
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: ROOT,
         element: <App />,
     },
     {
-        path: '/home',
+        path: LOGIN,
+        element: <Login />,
+    },
+    {
+        path: HOME,
         element: <Dashboard />,
     },
 ])
@@ -101,8 +105,3 @@ root.render(
         </ApolloProvider>
     </React.StrictMode>
 )
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()

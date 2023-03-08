@@ -1,13 +1,15 @@
-import React from 'react'
 import './App.css'
-import Login from './components/Login'
+import { REFRESH_TOKEN_KEY } from './auth'
+import React from 'react'
+import { Navigate } from 'react-router'
+import { HOME, LOGIN } from './constants/paths'
 
 function App() {
-    return (
-        <div className="App">
-            <Login />
-        </div>
-    )
+    if (!localStorage.getItem(REFRESH_TOKEN_KEY)) {
+        return <Navigate to={LOGIN} />
+    } else {
+        return <Navigate to={HOME} />
+    }
 }
 
 export default App

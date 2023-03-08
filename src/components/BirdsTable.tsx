@@ -2,7 +2,7 @@ import React from 'react'
 import { Bird } from '../types'
 import Loader from './Loader'
 import BirdRow from './BirdRow'
-import { MIN_SEARCH_CHARS } from '../config/constants'
+import { MIN_SEARCH_CHARS } from '../constants/config'
 
 const BirdsTable: React.FC<{
     birds: Bird[]

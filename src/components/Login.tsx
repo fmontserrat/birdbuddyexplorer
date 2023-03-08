@@ -4,7 +4,7 @@ import ErrorBanner from './ErrorBanner'
 import Loader from './Loader'
 import { useNavigate } from 'react-router-dom'
 import { LOGIN_MUTATION } from '../queries/loginMutation'
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../config/constants'
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../auth'
 
 const Login = () => {
     const [email, setEmail] = React.useState('')

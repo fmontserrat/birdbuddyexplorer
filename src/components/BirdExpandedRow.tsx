@@ -4,7 +4,7 @@ import { Bird, Edge } from '../types'
 import NodeComponent from './Node'
 import Loader from './Loader'
 import React from 'react'
-import { MAX_PAGE_SIZE } from '../config/constants'
+import { MAX_PAGE_SIZE } from '../constants/config'
 
 const BirdExpandedRow: React.FC<{
     loading: boolean

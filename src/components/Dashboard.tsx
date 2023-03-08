@@ -3,14 +3,19 @@ import { SEARCH_BIRDS } from '../queries/birdSearchQuery'
 import BirdsTable from './BirdsTable'
 import { Bird } from '../types'
 import SearchBar from './SearchBar'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import debounce from 'lodash.debounce'
-import { MIN_SEARCH_CHARS, SEARCH_DEBOUNCE_IM_MS } from '../config/constants'
+import { MIN_SEARCH_CHARS, SEARCH_DEBOUNCE_IM_MS } from '../constants/config'
+import { AUTH_TOKEN_EXPIRED_ERROR } from '../constants/errors'
+import { useNavigate } from 'react-router-dom'
+import { LOGIN } from '../constants/paths'
+import { ACCESS_TOKEN_KEY } from '../auth'
 
 const Dashboard = () => {
     const [searchQuery, setSearchQuery] = React.useState('')
+    const navigate = useNavigate()
 
-    const { loading, data } = useQuery(SEARCH_BIRDS, {
+    const { loading, data, error } = useQuery(SEARCH_BIRDS, {
         variables: { searchQuery },
         skip: (searchQuery?.length || 0) < MIN_SEARCH_CHARS,
     })
@@ -21,6 +26,18 @@ const Dashboard = () => {
         debounce(changeHandler, SEARCH_DEBOUNCE_IM_MS),
         []
     )
+
+    useEffect(() => {
+        const token = localStorage.getItem(ACCESS_TOKEN_KEY)
+        if (!token) {
+            navigate(LOGIN)
+        }
+    }, [])
+    useEffect(() => {
+        if (error?.message === AUTH_TOKEN_EXPIRED_ERROR) {
+            navigate(LOGIN)
+        }
+    }, [error])
 
     return (
         <div className="m-8 px-4 py-8 sm:px-6 md:px-8 m-auto w-full">
