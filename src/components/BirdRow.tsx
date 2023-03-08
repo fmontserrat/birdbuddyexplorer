@@ -2,20 +2,10 @@ import React from 'react'
 import { Bird } from '../types'
 import IconWithTooltip from './IconWithTooltip'
 import { cleanKey } from '../utils/keyCleaner'
-import { useQuery } from '@apollo/client'
-import { BIRD_MEDIA } from '../queries/birdMediaQuery'
-import { MAX_PAGE_SIZE } from '../config/constants'
-import BirdExpandedRow from './BirdExpandedRow'
+import BirdSimpleExpandedRow from './BirdSimpleExpandedRow'
 
 const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => {
     const [isExpanded, setIsExpanded] = React.useState(false)
-    const { data, loading } = useQuery(BIRD_MEDIA, {
-        variables: {
-            speciesId: bird.id,
-            first: MAX_PAGE_SIZE,
-        },
-        skip: !isExpanded,
-    })
 
     return (
         <>
@@ -79,12 +69,7 @@ const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => {
                     </div>
                 </td>
             </tr>
-            <BirdExpandedRow
-                data={data}
-                loading={loading}
-                bird={bird}
-                isExpanded={isExpanded}
-            />
+            <BirdSimpleExpandedRow bird={bird} isExpanded={isExpanded} />
         </>
     )
 }

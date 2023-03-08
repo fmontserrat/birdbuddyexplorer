@@ -3,7 +3,7 @@ import React from 'react'
 import { Tooltip } from 'react-tooltip'
 
 const NodeComponent: React.FC<{ node: Node }> = ({ node }) => (
-    <div className="p-8 flex-1 grow basis-1/5">
+    <div className="py-4 md:p-8 flex-1 grow basis-11/12 md:basis-1/2 lg:basis-1/3 xl:basis-1/6">
         <img
             data-tooltip-id={node.id}
             data-tooltip-content={`${node.feederName} in ${
