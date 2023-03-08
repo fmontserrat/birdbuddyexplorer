@@ -98,7 +98,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
     },
     {
-        path: '/bird/:id',
+        path: '/birdbuddyexplorer/bird/:id',
         element: <BirdPage />,
     },
 ])

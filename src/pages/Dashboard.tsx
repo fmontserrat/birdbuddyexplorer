@@ -40,7 +40,7 @@ const Dashboard = () => {
                     <h1 className="flex items-center text-4xl font-semibold text-gray-900">
                         <img
                             className="h-12 align-middle mr-4"
-                            src="/android-chrome-512x512.png"
+                            src="/birdbuddyexplorer/android-chrome-512x512.png"
                             alt="Bird Buddy Explorer"
                         />
                         <span>Bird Buddy Explorer</span>

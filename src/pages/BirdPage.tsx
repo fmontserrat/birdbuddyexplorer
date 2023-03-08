@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import BirdProfile from '../components/BirdProfile'
 import { useQuery } from '@apollo/client'
 import { BIRD_MEDIA } from '../queries/birdMediaQuery'
 import { MAX_PAGE_SIZE } from '../constants/config'
@@ -11,6 +10,13 @@ import uniqWith from 'lodash.uniqwith'
 import { cleanKey } from '../utils/keyCleaner'
 import IconWithTooltip from '../components/IconWithTooltip'
 import SelectMonth from '../components/SelectMonth'
+import Stats from '../components/Stats'
+import BirdCharts from '../components/birdPage/BirdCharts'
+import Title from '../components/Title'
+import { capitalizeFirstLetter } from '../utils/stringUtils'
+import VisitsMap from '../components/birdPage/VisitsMap'
+import BirdSounds from '../components/birdPage/BirdSounds'
+import BirdGallery from '../components/birdPage/BirdGallery'
 
 const MONTHS = [
     { month: 'january', year: 2023 },
@@ -42,11 +48,13 @@ const BirdPage: React.FC = () => {
         skip: !id,
     })
 
+    const monthName = capitalizeFirstLetter(month)
+
     useEffect(() => {
         if (birdData?.species.name) {
             setHistoryLoading(true)
             Papa.parse(
-                `/data/${year}/${month}/${encodeURIComponent(
+                `/birdbuddyexplorer/data/${year}/${month}/${encodeURIComponent(
                     birdData.species.name
                 )}.csv`,
                 {
@@ -79,6 +87,8 @@ const BirdPage: React.FC = () => {
     }, [birdData?.species.name, month])
 
     const bird = birdData?.species
+    const media = mediaData?.collectionCommunityMediaBySpeciesId
+
     return (
         <div className="m-8 px-4 py-8 sm:px-6 md:px-8 m-auto w-full">
             <div className="sm:flex sm:items-center">
@@ -112,7 +122,7 @@ const BirdPage: React.FC = () => {
             <div className="mt-8">
                 <div className="p-8">
                     <SelectMonth
-                        disabled={mediaLoading || birdLoading}
+                        disabled={mediaLoading || birdLoading || historyLoading}
                         options={MONTHS}
                         selectOption={(option) => {
                             setMonth(option.month)
@@ -123,15 +133,40 @@ const BirdPage: React.FC = () => {
                         )}
                     />
                 </div>
-                <BirdProfile
-                    loading={mediaLoading || birdLoading || historyLoading}
-                    media={mediaData?.collectionCommunityMediaBySpeciesId}
-                    bird={birdData?.species}
-                    month={month}
-                    year={year}
-                    records={records}
-                    uniqueLocations={uniqueLocations}
-                />
+
+                {!birdLoading && (
+                    <div className="mx-8">
+                        <div className="ml-4">
+                            <div className="my-8">
+                                <Stats
+                                    records={records}
+                                    uniqueLocations={uniqueLocations}
+                                    loading={historyLoading}
+                                />
+                            </div>
+                            <BirdCharts
+                                records={records}
+                                monthName={monthName}
+                                bird={bird}
+                                loading={historyLoading}
+                            />
+                            <div>
+                                <Title>
+                                    Locations of visits of{' '}
+                                    {bird?.sentenceName || 'this bird'} in{' '}
+                                    {capitalizeFirstLetter(month)} {year}
+                                </Title>
+                                <VisitsMap records={uniqueLocations} />
+                            </div>
+                            <BirdSounds bird={bird} />
+                        </div>
+                        <BirdGallery
+                            bird={bird}
+                            media={media}
+                            loading={birdLoading || mediaLoading}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     )

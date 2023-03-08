@@ -1,6 +1,6 @@
 import * as V from 'victory'
 import React, { useEffect, useState } from 'react'
-import { VisitRecord } from '../types'
+import { VisitRecord } from '../../types'
 import { VictoryTheme } from 'victory'
 
 interface Data {
