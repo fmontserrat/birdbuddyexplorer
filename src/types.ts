@@ -54,8 +54,15 @@ export interface Media {
     owning: boolean
 }
 
-interface Sound {
+export interface Sound {
     authorName: string
     sourceUrl: string
     url: string
+}
+
+export interface VisitRecord {
+    anonymized_latitude: string
+    anonymized_longitude: string
+    timestamp: string
+    speciesName: string
 }

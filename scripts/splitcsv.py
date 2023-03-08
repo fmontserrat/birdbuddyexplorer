@@ -1,7 +1,8 @@
 import pandas as pd
 
 column_name = 'species_name'
-month = 'january'
+month = 'october'
+year = 2022
 
 # Use path to monthly file here
 df = pd.read_csv('../monthly/all_metadata_{}.csv'.format(month))
@@ -20,4 +21,4 @@ for value in column_values:
     print(f"Creating file for {value}...")
 
     # Write the dataframe to a new csv file
-    value_df.to_csv(f"../public/data/2023/{month}/{value}.csv", index=False)
+    value_df.to_csv(f"../public/data/{year}/{month}/{value}.csv", index=False)
