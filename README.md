@@ -2,6 +2,8 @@
 
 Unofficial webapp client for [Bird Buddy](https://mybirdbuddy.com/). 
 
+![Screenshot 2023-03-08 at 22 03 21](https://user-images.githubusercontent.com/936743/223857131-ece725ce-37dc-44e4-8542-22ad694732b5.png)
+
 The app leverages the GraphQL interface of Bird Buddy (requires an account) and the monthly reports published at [live.mybirdbuddy.com](https://live.mybirdbuddy.com).
 
 Available features about birds:
