@@ -2,6 +2,7 @@ import React from 'react'
 import { Bird } from '../types'
 import Loader from './Loader'
 import BirdRow from './BirdRow'
+import { MIN_SEARCH_CHARS } from '../config/constants'
 
 const BirdsTable: React.FC<{
     birds: Bird[]
@@ -29,13 +30,13 @@ const BirdsTable: React.FC<{
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 hidden md:table-cell"
                                     >
                                         Badges
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 hidden md:table-cell"
                                     >
                                         Eats
                                     </th>
@@ -48,13 +49,16 @@ const BirdsTable: React.FC<{
                             </tbody>
                         </table>
                     )}
-                    {!birds.length && !!searchQuery?.length && !loading && (
-                        <div className="flex justify-center mt-8 text-xl text-gray-600">
-                            No birds called{' '}
-                            <b className="mx-1"> {` ${searchQuery} `} </b> were
-                            found
-                        </div>
-                    )}
+                    {searchQuery.length >= MIN_SEARCH_CHARS &&
+                        !birds.length &&
+                        !!searchQuery?.length &&
+                        !loading && (
+                            <div className="flex justify-center mt-8 text-xl text-gray-600">
+                                No birds called{' '}
+                                <b className="mx-1"> {` ${searchQuery} `} </b>{' '}
+                                were found
+                            </div>
+                        )}
                 </div>
             </div>
         </div>

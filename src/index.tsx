@@ -16,11 +16,12 @@ import Dashboard from './components/Dashboard'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './config/constants'
 import { onError } from '@apollo/client/link/error'
 import { AUTH_TOKEN_EXPIRED_ERROR } from './config/errors'
-import { REFRESH_TOKEN_MUTATION } from './queries/loginMutation'
+import { refreshToken } from './auth/auth'
+import { setContext } from '@apollo/client/link/context'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
-const errorHandler = onError(
+const errorLink = onError(
     ({ graphQLErrors, networkError, operation, forward }) => {
         if (networkError) {
             console.log(`[Network error]: ${networkError}`)
@@ -35,29 +36,28 @@ const errorHandler = onError(
                 )
 
                 if (message === AUTH_TOKEN_EXPIRED_ERROR && apolloClient) {
-                    const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY)
+                    const newTokens = await refreshToken()
 
-                    if (refreshToken) {
-                        const response = await apolloClient.mutate({
-                            mutation: REFRESH_TOKEN_MUTATION,
-                            variables: { token: refreshToken },
+                    if (newTokens) {
+                        localStorage.setItem(
+                            ACCESS_TOKEN_KEY,
+                            newTokens.accessToken
+                        )
+
+                        localStorage.setItem(
+                            REFRESH_TOKEN_KEY,
+                            newTokens.refreshToken
+                        )
+
+                        const oldHeaders = operation.getContext().headers
+
+                        operation.setContext({
+                            headers: {
+                                ...oldHeaders,
+                                authorization: `Bearer ${newTokens.accessToken}`,
+                            },
                         })
-
-                        const accessToken =
-                            response.data?.authRefreshToken?.accessToken ||
-                            response.data?.accessToken
-                        const newRefreshToken =
-                            response.data?.authRefreshToken?.refreshToken ||
-                            response.data?.refreshToken
-
-                        if (accessToken) {
-                            localStorage.setItem(ACCESS_TOKEN_KEY, accessToken)
-                            localStorage.setItem(
-                                REFRESH_TOKEN_KEY,
-                                newRefreshToken
-                            )
-                            return forward(operation)
-                        }
+                        return forward(operation)
                     }
                 }
             })
@@ -67,20 +67,19 @@ const errorHandler = onError(
 
 const httpLink = new HttpLink({ uri: GRAPHQL_URL })
 
-const authMiddleware = new ApolloLink((operation, forward) => {
+const authLink = setContext(async (_, { headers }) => {
     const token = localStorage.getItem(ACCESS_TOKEN_KEY)
-    operation.setContext({
+    return {
         headers: {
+            ...headers,
             authorization: token ? `Bearer ${token}` : '',
         },
-    })
-
-    return forward(operation)
+    }
 })
 
 export const apolloClient = new ApolloClient({
     uri: GRAPHQL_URL,
-    link: ApolloLink.from([authMiddleware, errorHandler, httpLink]),
+    link: ApolloLink.from([authLink, errorLink, httpLink]),
     cache: new InMemoryCache(),
 })
 

@@ -36,7 +36,7 @@ const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => {
                         </div>
                     </div>
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden md:table-cell">
                     <div className="flex">
                         {bird.badges.map((badge) => {
                             const key = `${bird.id}-${cleanKey(badge.name)}`
@@ -52,7 +52,7 @@ const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => {
                         })}
                     </div>
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden md:table-cell">
                     <div className="flex">
                         {bird.favoriteFoods.map((food) => {
                             const key = `${bird.id}-${cleanKey(food.name)}`

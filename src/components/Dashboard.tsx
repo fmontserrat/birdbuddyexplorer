@@ -5,14 +5,14 @@ import { Bird } from '../types'
 import SearchBar from './SearchBar'
 import React, { useCallback } from 'react'
 import debounce from 'lodash.debounce'
-import { SEARCH_DEBOUNCE_IM_MS } from '../config/constants'
+import { MIN_SEARCH_CHARS, SEARCH_DEBOUNCE_IM_MS } from '../config/constants'
 
 const Dashboard = () => {
     const [searchQuery, setSearchQuery] = React.useState('')
 
     const { loading, data } = useQuery(SEARCH_BIRDS, {
         variables: { searchQuery },
-        skip: (searchQuery?.length || 0) <= 1,
+        skip: (searchQuery?.length || 0) < MIN_SEARCH_CHARS,
     })
 
     const changeHandler = (value: string) => setSearchQuery(value)
