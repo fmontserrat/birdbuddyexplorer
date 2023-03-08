@@ -23,7 +23,7 @@ const Dashboard = () => {
     )
 
     return (
-        <div className="m-8 px-4 sm:px-6 lg:px-8">
+        <div className="m-8 px-4 py-8 sm:px-6 md:px-8 m-auto w-full">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="flex items-center text-4xl font-semibold text-gray-900">

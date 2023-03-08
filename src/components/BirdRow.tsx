@@ -14,7 +14,7 @@ const BirdRow: React.FC<{ bird: Bird }> = ({ bird }) => {
                 className="cursor-pointer"
                 onClick={() => setIsExpanded(!isExpanded)}
             >
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-xs sm:text-sm sm:pl-0">
                     <div className="flex items-center">
                         <div className="h-10 w-10 flex-shrink-0">
                             <img

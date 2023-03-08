@@ -9,7 +9,7 @@ const BirdsTable: React.FC<{
     searchQuery: string
 }> = ({ birds, loading, searchQuery }) => {
     return (
-        <div className="flow-root mt-4">
+        <div className="flow-root mt-4 w-100">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     {loading && (
