@@ -1,28 +1,63 @@
 # Bird Buddy Explorer
 
-## Available Scripts
+Unofficial webapp client for [Bird Buddy](https://mybirdbuddy.com/). 
 
-In the project directory, you can run:
+The app leverages the GraphQL interface of Bird Buddy (requires an account) and the monthly reports published at [live.mybirdbuddy.com](https://live.mybirdbuddy.com).
 
-### `npm start`
+Available features about birds:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Search bird by species
+- See the first 100 feed pictures
+- See the badges and diets of birds
+- Play the sounds of birds
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Available insights about data:
 
-### `npm test`
+- Map visualization of the anonymized records
+- Monthly stats about anonymized records
+- Monthly chart representation of anonymized records
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Open app from browser
+The app is deployed at:
+https://fmontserrat.github.io/birdbuddyexplorer
 
-### `npm run build`
+**NOTE: Due to CORS checks at the BirdBuddy GraphQL API side, the app can only be used from the internet with disabled CORS extensions such as [this one](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en)**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**NOTE of the NOTE: Disabled CORS is dangerous. Do not use the extension on other sites**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Set up a local version of the app in your computer
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone the repository
+
+### Install requirements if needed
+
+- NodeJS https://nodejs.org/en/download/
+- Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+Once NodeJS is installed
+
+```handlebars
+$ npm install --global yarn
+```
+
+### Download source code, build and start app
+
+```
+$ git clone git@github.com:fmontserrat/birdbuddyexplorer.git
+$ cd birdbuddyexplorer
+```
+
+Install dependencies (one time)
+```
+yarn install
+```
+
+Start app
+```
+yarn start
+```
+
+Open your browser and copy this address:
+http://localhost:3000/birdbuddyexplorer
+
+At this point you are running the app on your computer :-)
