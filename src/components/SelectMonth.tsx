@@ -25,10 +25,10 @@ const SelectMonth: React.FC<{
             </label>
             <select
                 onChange={(event) => {
-                    const date = event.target.value.split(' ')
+                    const data = event.target.value.split(' ')
                     selectOption({
-                        month: date[0].toLowerCase(),
-                        year: Number(date[1]),
+                        month: data[0].toLowerCase(),
+                        year: Number(data[1]),
                     })
                 }}
                 disabled={disabled}

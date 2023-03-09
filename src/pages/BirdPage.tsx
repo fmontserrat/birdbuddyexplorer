@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { BIRD_MEDIA } from '../queries/birdMediaQuery'
 import { MAX_PAGE_SIZE } from '../constants/config'
@@ -17,6 +17,9 @@ import { capitalizeFirstLetter } from '../utils/stringUtils'
 import VisitsMap from '../components/birdPage/VisitsMap'
 import BirdSounds from '../components/birdPage/BirdSounds'
 import BirdGallery from '../components/birdPage/BirdGallery'
+import Select from '../components/Select'
+import { reportPagePath } from '../constants/paths'
+import { ALL_BIRDS_SORTED } from '../constants/allbirds'
 
 const MONTHS = [
     { month: 'january', year: 2023 },
@@ -26,7 +29,8 @@ const MONTHS = [
 ]
 
 const BirdPage: React.FC = () => {
-    const { id } = useParams()
+    const navigate = useNavigate()
+    const { id, name } = useParams()
     const [month, setMonth] = useState<string>(MONTHS[0].month)
     const [year, setYear] = useState<number>(MONTHS[0].year)
     const [uniqueLocations, setUniqueLocations] = useState<VisitRecord[]>([])
@@ -51,11 +55,12 @@ const BirdPage: React.FC = () => {
     const monthName = capitalizeFirstLetter(month)
 
     useEffect(() => {
-        if (birdData?.species.name) {
+        const birdName = birdData?.species.name || name
+        if (birdName) {
             setHistoryLoading(true)
             Papa.parse(
                 `/birdbuddyexplorer/data/${year}/${month}/${encodeURIComponent(
-                    birdData.species.name
+                    birdName
                 )}.csv`,
                 {
                     download: true,
@@ -84,7 +89,7 @@ const BirdPage: React.FC = () => {
                 }
             )
         }
-    }, [birdData?.species.name, month])
+    }, [birdData?.species.name, month, name])
 
     const bird = birdData?.species
     const media = mediaData?.collectionCommunityMediaBySpeciesId
@@ -94,14 +99,20 @@ const BirdPage: React.FC = () => {
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="flex items-center text-4xl font-semibold text-gray-900">
-                        {bird?.iconUrl && (
+                        {bird?.iconUrl ? (
                             <img
                                 className="align-middle h-24 ml-8 mr-0"
                                 src={bird.iconUrl}
                                 alt="Bird Buddy Explorer"
                             />
+                        ) : (
+                            <img
+                                className="h-12 align-middle mr-4"
+                                src="/birdbuddyexplorer/android-chrome-512x512.png"
+                                alt="Bird Buddy Explorer"
+                            />
                         )}
-                        <span>{bird?.name}</span>
+                        {<span>{bird?.name || name}</span>}
                         <div className="flex mx-2">
                             {bird?.badges.map((badge: Badge) => {
                                 const key = `${bird.id}-${cleanKey(badge.name)}`
@@ -120,7 +131,19 @@ const BirdPage: React.FC = () => {
                 </div>
             </div>
             <div className="mt-8">
-                <div className="p-8">
+                <div className="p-8 flex">
+                    {name && (
+                        <div className="mr-8">
+                            <Select
+                                label="Available Bird Data"
+                                options={ALL_BIRDS_SORTED}
+                                selectedValue={name}
+                                selectOption={(option) => {
+                                    navigate(reportPagePath(option))
+                                }}
+                            />
+                        </div>
+                    )}
                     <SelectMonth
                         disabled={mediaLoading || birdLoading || historyLoading}
                         options={MONTHS}

@@ -5,6 +5,9 @@ import Loader from './Loader'
 import { useNavigate } from 'react-router-dom'
 import { LOGIN_MUTATION } from '../queries/loginMutation'
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../auth'
+import Select from './Select'
+import { ALL_BIRDS_SORTED } from '../constants/allbirds'
+import { reportPagePath } from '../constants/paths'
 
 const Login = () => {
     const [email, setEmail] = React.useState('')
@@ -63,7 +66,7 @@ const Login = () => {
 
             {!loading && (
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                    <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-8">
                         {(error ||
                             (data && !data?.authEmailSignIn?.accessToken)) && (
                             <div className="my-4">
@@ -147,6 +150,23 @@ const Login = () => {
                                 </button>
                             </div>
                         </form>
+
+                        <div className="mt-12 text-gray-600 text-center flex flex-col">
+                            <div>
+                                <div>Or select a reported bird</div>
+                                <div className="text-xs">
+                                    (without BirdBuddy API access)
+                                </div>
+                            </div>
+                            <div className="m-auto pt-2">
+                                <Select
+                                    options={ALL_BIRDS_SORTED}
+                                    selectOption={(option) => {
+                                        navigate(reportPagePath(option))
+                                    }}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

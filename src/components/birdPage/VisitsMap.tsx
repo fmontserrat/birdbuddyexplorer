@@ -23,7 +23,9 @@ const VisitsMap: React.FC<{ records: VisitRecord[] }> = ({ records }) => {
                 group.addLayer(marker)
             })
 
-        mapRef.current && mapRef.current.fitBounds(group.getBounds())
+        if (group.getLayers().length) {
+            mapRef.current && mapRef.current.fitBounds(group.getBounds())
+        }
     }, [records])
     return (
         <div className="p-4">

@@ -101,6 +101,10 @@ const router = createBrowserRouter([
         path: '/birdbuddyexplorer/bird/:id',
         element: <BirdPage />,
     },
+    {
+        path: '/birdbuddyexplorer/report/:name',
+        element: <BirdPage />,
+    },
 ])
 
 root.render(
