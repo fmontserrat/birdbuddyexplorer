@@ -16,7 +16,7 @@ for value in column_values:
     # Create a dataframe for each unique value
     value_df = df[df[column_name] == value]
 
-    print(f"Creating file for {value_df}...")
+    print(f"Creating file for {value}...")
 
     # Write the dataframe to a new csv file
     value_df.to_csv(f"../public/data/{year}/{month}/{value}.csv", index=False)
