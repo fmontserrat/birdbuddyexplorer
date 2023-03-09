@@ -73,3 +73,7 @@ To log into the app use Bird Buddy login and password.
 If your account uses Google or Facebook SSO, you can create a new one from the Android or iOS app (log out, sign up and log back into your own account) and use those credentials for this app.
 
 *NOTE: The app does not access your feeder, only community data for with login is still necessary. There is no need to invite your new account into your feeder.*
+
+## Access without logging in
+
+At the login page select a bird from the list below the login input You'll be able to see reports without API access. No pictures, icons, sounds or other bird data outside of reports will be visible.
