@@ -25,3 +25,9 @@ src/__generated__
 .idea
 .env
 monthly
+
+# Temp ignoring files above github size threshold.
+# TODO Process the files instead of storing them in the repo
+public/data/2023/february/Northern Cardinal.csv
+public/data/2023/february/House Sparrow.csv
+public/data/2023/february/House Finch.csv

@@ -345,6 +345,23 @@ export const ALL_BIRDS = [
     'Yellow Grosbeak',
     'Brown-Necked Raven',
     'Mexican Chickadee',
+    'Fairywren',
+    'Turquoise Parrot',
+    'Red-eared Firetail',
+    'Brown Bullfinch',
+    'Chestnut-Cheeked Starling',
+    'Chinese Thrush',
+    'Red-Rumped Parrot',
+    'Cockatiel',
+    'Black-Collared Starling',
+    'Greater Bluebonnet',
+    'Chestnut-tailed Starling',
+    'Grey-capped greenfinch',
+    'Oriental Magpie',
+    'Oriental Pied-Hornbill',
+    'Sugarbird',
+    'Princess Parrot',
+    'Crested Myna',
 ]
 
 export const ALL_BIRDS_SORTED = ALL_BIRDS.sort()

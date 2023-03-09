@@ -22,6 +22,7 @@ import { reportPagePath } from '../constants/paths'
 import { ALL_BIRDS_SORTED } from '../constants/allbirds'
 
 const MONTHS = [
+    { month: 'february', year: 2023 },
     { month: 'january', year: 2023 },
     { month: 'december', year: 2022 },
     { month: 'november', year: 2022 },

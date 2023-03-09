@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 column_name = 'species_name'
-month = 'january'
+month = 'february'
 year = 2023
 
 # Use path to monthly file here
